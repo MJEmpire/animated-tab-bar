@@ -61,7 +61,16 @@ class RAMAnimatedTabBarController: UITabBarController {
 
         createCustomIcons(containers)
 
-
+        // add for hiding TabBar
+        let conls = (self.viewControllers as? [UIViewController])?.filter({$0 is UINavigationController}) ?? []
+        for ctl in conls{
+            (ctl as! UINavigationController).delegate = self
+        }
+    }
+    
+// MARK: add for hiding TabBar
+    func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
+        hideTabBar(viewController.hidesBottomBarWhenPushed)
     }
 
 // MARK: create methods
